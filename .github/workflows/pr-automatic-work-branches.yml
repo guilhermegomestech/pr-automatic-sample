@@ -51,8 +51,8 @@ jobs:
           branches=$(echo "${{ steps.getBranches.outputs.BRANCHES }}" | tr ',' '\n')
            for branch in $branches; do
             # Verificar se um PR já existe da branch base (main) para a branch de destino ($branch)
-            pr_exists=$(gh pr list --search is:open --base main --head "$branch")
-            if [[ $pr_exists == *"no pull requests"* ]]; then
+            pr_exists=$(gh pr list --base main --head "$branch")
+            if ! echo "$pr_list" | grep -q "Open"; then
               echo "Não existe PR de main para $branch. Criando PR..."
               gh pr create --base "$branch" --head main --title "Atualização da branch $branch" --body "Essa é uma atualização automática da branch $branch."
             else
