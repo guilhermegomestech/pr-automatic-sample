@@ -53,7 +53,7 @@ jobs:
             # Verificar se um PR já existe da branch base (main) para a branch de destino ($branch)
             pr_exists=$(gh pr list --search open --base main --head "$branch")
             
-            if [ -n "$pr_exists" ]; then
+            if [ ! -n "$pr_exists" ]; then
               echo "Não existe PR de main para $branch. Criando PR..."
               gh pr create --base "$branch" --head main --title "Atualização da branch $branch" --body "Essa é uma atualização automática da branch $branch."
             else
