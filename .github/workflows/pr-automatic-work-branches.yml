@@ -51,7 +51,7 @@ jobs:
           branches=$(echo "${{ steps.getBranches.outputs.BRANCHES }}" | tr ',' '\n')
            for branch in $branches; do
             # Verificar se um PR já existe da branch base (main) para a branch de destino ($branch)
-            pr_exists=$(gh pr list --base main --head "$branch")
+            pr_exists=$(gh pr list --search is:open --base main --head "$branch")
             echo "$pr_exists"
             if [ -z $pr_exists ]; then
               echo "Não existe PR de main para $branch. Criando PR..."
